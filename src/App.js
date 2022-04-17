@@ -8,6 +8,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import PropTypes from 'prop-types';
 import Dialog from '@mui/material/Dialog';
 import Stack from '@mui/material/Stack';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 
 
@@ -17,77 +19,16 @@ var values = []
 var valuesDecimal = []
 
 
-function SimpleDialog(props) {
-  const { onClose, selectedValue, open } = props;
 
-  const handleClose = () => {
-    onClose(selectedValue);
-    values = []
-    valuesDecimal = []
-  };
+console.warn = () => {};
 
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <table>
-      <tr>
-    <th>Numero Aleatorio</th>
-    <th>Ri</th>
-  </tr>
-        {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
-      {/* {values.map(name => <h1>{name}</h1>)}
-      {valuesDecimal.map(name => <h1>{name}</h1>)} */}
-      </table>
-    </Dialog>
-  );
-}
-
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
-};
-
-
-function SimpleDialogPlus(props) {
-  const { onClose, selectedValue, open } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-    values = []
-    valuesDecimal = []
-  };
-
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <table>
-      <tr>
-    <th>Numero Aleatorio</th>
-    <th>Ri</th>
-  </tr>
-        {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
-      {/* {values.map(name => <h1>{name}</h1>)}
-      {valuesDecimal.map(name => <h1>{name}</h1>)} */}
-      </table>
-
-      <Stack spacing={2} direction="row">
-      <Button variant="contained">Chi-Cuadrada</Button>
-      <Button variant="contained">Kolmogorov-Smirnov</Button>
-    </Stack>
-    </Dialog>
-  );
-}
-
-SimpleDialogPlus.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
-};
 
 
 
 export default function App() {
 
 const [open, setOpen] = React.useState(false);
+const [open2, setOpen2] = React.useState(false);
 const [selectedValue, setSelectedValue] = React.useState(values[1]);
 
 
@@ -95,8 +36,17 @@ const handleClickOpen = () => {
   setOpen(true);
 };
 
+const handleClickOpen2 = () => {
+  setOpen2(true);
+};
+
 const handleClose = (value) => {
   setOpen(false);
+  setSelectedValue(value);
+};
+
+const handleClose2 = (value) => {
+  setOpen2(false);
   setSelectedValue(value);
 };
 
@@ -132,6 +82,106 @@ const handleClose = (value) => {
   };
   const handleModChange = (event) => {
     setMod(parseInt(event.target.value));
+  };
+
+
+  function SimpleDialog(props) {
+    const { onClose, selectedValue, open } = props;
+  
+    const handleClose = () => {
+      onClose(selectedValue);
+      values = []
+      valuesDecimal = []
+    };
+  
+    return (
+      <Dialog onClose={handleClose} open={open}>
+        <table>
+        <tr>
+      <th>Numero Aleatorio</th>
+      <th>Ri</th>
+    </tr>
+          {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
+        {/* {values.map(name => <h1>{name}</h1>)}
+        {valuesDecimal.map(name => <h1>{name}</h1>)} */}
+        </table>
+      </Dialog>
+    );
+  }
+  
+  SimpleDialog.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
+  };
+  
+  
+  function SimpleDialogPlus(props) {
+    const { onClose, selectedValue, open } = props;
+  
+    const handleClose = () => {
+      onClose(selectedValue);
+      values = []
+      valuesDecimal = []
+    };
+  
+    return (
+      <Dialog onClose={handleClose} open={open}>
+        <table>
+        <tr>
+      <th>Numero Aleatorio</th>
+      <th>Ri</th>
+    </tr>
+          {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
+        {/* {values.map(name => <h1>{name}</h1>)}
+        {valuesDecimal.map(name => <h1>{name}</h1>)} */}
+        </table>
+  
+        <Stack spacing={2} direction="row">
+        <Button variant="contained">Chi-Cuadrada</Button>
+        <Button  onClick={() => {
+    handleClickOpen2();
+  }} variant="contained">Kolmogorov-Smirnov</Button>
+      </Stack>
+
+      <SimpleDialogSmirnov
+        selectedValue={selectedValue}
+        open={open2}
+        onClose={handleClose2}
+      />
+      
+      </Dialog>
+    );
+  }
+  
+  SimpleDialogPlus.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
+  };
+  
+  function SimpleDialogSmirnov(props) {
+    const { onClose, selectedValue, open } = props;
+  
+    const handleClose2 = () => {
+      onClose(selectedValue);
+    };
+  
+    return (
+      <Dialog onClose={handleClose2} open={open2}>
+        <DialogTitle>Prueba Kolmogorov-Smirnov</DialogTitle>
+        <TextField id="outlined-basic" label="Ingersar Alpha"  variant="outlined" />
+        <Button  onClick={() => {
+    Smirnov();
+  }} variant="contained">Verificar</Button>
+      </Dialog>
+    );
+  }
+  
+  SimpleDialogSmirnov.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
   };
   
 
@@ -179,8 +229,7 @@ const handleClose = (value) => {
       valuesDecimal.push(riSeed);
   
     }
-    console.log(values)
-    console.log(valuesDecimal)
+
   }
 
   function mcmCalculate(){
@@ -261,6 +310,49 @@ const handleClose = (value) => {
       valuesDecimal.push(0)
     }   
   }
+
+  function mclmCalculate(){
+  
+
+
+  }
+
+  function Smirnov(){
+    var iN = []
+    var iNri = []
+    var riin = []
+
+    for (let i = 0; i < valuesDecimal.length; i++) {
+      
+
+      iN[i] = (i+1)/valuesDecimal.length
+      
+    } 
+
+    for (let i = 0; i < valuesDecimal.length; i++) {
+      iNri[i] = iN[i] - valuesDecimal[i]
+  
+    }
+
+    riin[0] = valuesDecimal[0]
+
+    for (let i = 1; i < valuesDecimal.length; i++) {
+      riin[i] = iN[i-1] - iNri[i]
+    }
+
+  var dArr = []
+  dArr[0] = Math.max.apply(Math, iNri)
+  dArr[1] = Math.max.apply(Math, riin)
+
+  var dMax = Math.max.apply(Math, dArr)
+
+  console.log(dMax)
+  
+
+
+
+  }
+  
 
   switch (alignment) {
     case 'mcc':
@@ -354,6 +446,8 @@ const handleClose = (value) => {
         open={open}
         onClose={handleClose}
       />
+
+
     
      
      
