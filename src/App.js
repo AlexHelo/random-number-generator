@@ -20,9 +20,15 @@ export default function App() {
   const [alignment, setAlignment] = React.useState('mcc');
   const [seed, setSeed] = React.useState('');
   const [size, setSize] = React.useState('');
+  const [inc, setInc] = React.useState('');
+  const [mult, setMult] = React.useState('');
+  const [mod, setMod] = React.useState('');
+  
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
+
+
   };
 
   const handleSeedChange = (event) => {
@@ -32,6 +38,17 @@ export default function App() {
   const handleSizeChange = (event) => {
     setSize(parseInt(event.target.value));
   };
+  const handleIncChange = (event) => {
+    setInc(parseInt(event.target.value));
+  };
+
+  const handleMultChange = (event) => {
+    setMult(parseInt(event.target.value));
+  };
+  const handleModChange = (event) => {
+    setMod(parseInt(event.target.value));
+  };
+  
 
   function mccCalculate() {
   var squareSeed
@@ -68,12 +85,59 @@ export default function App() {
 
    render(
     <div className="App">
-    {values.map(name => <h1>{name}</h1>)}
-    {valuesDecimal.map(name => <h1>{name}</h1>)}
+    <table>
+      {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
+    {/* {values.map(name => <h1>{name}</h1>)}
+    {valuesDecimal.map(name => <h1>{name}</h1>)} */}
+    </table>
       </div>
+
    );
 
+
+
   }
+
+  function mcCalculate(){
+    var iSeed;
+    var values = [];
+    var valuesDecimal =[];
+    var tempSeed;
+    var riSeed;
+
+    iSeed = (seed * mult + inc) %mod;
+    
+
+    for (let i = 0; i <= size; i++) {
+      values.push(iSeed);
+      tempSeed = iSeed;
+      iSeed = (tempSeed * mult + inc) %mod;
+      riSeed = tempSeed/mod;
+      valuesDecimal.push(riSeed);
+  
+    }
+    console.log(values)
+    console.log(valuesDecimal)
+
+    render(
+      <div className="App">
+      <table>
+        {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
+      {/* {values.map(name => <h1>{name}</h1>)}
+      {valuesDecimal.map(name => <h1>{name}</h1>)} */}
+      </table>
+        </div>
+    );
+
+
+
+  }
+
+  function mcmCalculate(){
+
+  }
+
+  
 
   switch (alignment) {
     case 'mcc':
@@ -144,14 +208,16 @@ export default function App() {
     autoComplete="off"
   >
     
-    <TextField id="outlined-basic" label="Semilla" variant="outlined" />
-    <TextField id="outlined-basic" label="Tamaño" variant="outlined" />
-    <TextField id="outlined-basic" label="Multiplicador" variant="outlined" />
-    <TextField id="outlined-basic" label="Incremento" variant="outlined" />
-    <TextField id="outlined-basic" label="Modulo" variant="outlined" />
+    <TextField id="outlined-basic" label="Semilla" onChange={handleSeedChange} variant="outlined" />
+    <TextField id="outlined-basic" label="Tamaño" onChange={handleSizeChange} variant="outlined" />
+    <TextField id="outlined-basic" label="Multiplicador" onChange={handleMultChange}  variant="outlined" />
+    <TextField id="outlined-basic" label="Incremento" onChange={handleIncChange} variant="outlined" />
+    <TextField id="outlined-basic" label="Modulo" onChange={handleModChange} variant="outlined" />
     </Box>
-
-    <Button variant="contained">Generar</Button>
+    <Button  onClick={() => {
+    mcCalculate();
+  }} variant="contained">Generar</Button>
+    
      
      
   </div>);
@@ -183,11 +249,11 @@ export default function App() {
     autoComplete="off"
   >
     
-    <TextField id="outlined-basic" label="Semilla" variant="outlined" />
-    <TextField id="outlined-basic" label="Tamaño" variant="outlined" />
-    <TextField id="outlined-basic" label="Multiplicador" variant="outlined" />
-    <TextField id="outlined-basic" label="Incremento" variant="outlined" />
-    <TextField id="outlined-basic" label="Modulo" variant="outlined" />
+    <TextField id="outlined-basic" label="Semilla" onChange={handleSeedChange} variant="outlined" />
+    <TextField id="outlined-basic" label="Tamaño" onChange={handleSizeChange} variant="outlined" />
+    <TextField id="outlined-basic" label="Multiplicador" onChange={handleMultChange}  variant="outlined" />
+    <TextField id="outlined-basic" label="Incremento" onChange={handleIncChange} variant="outlined" />
+    <TextField id="outlined-basic" label="Modulo" onChange={handleModChange} variant="outlined" />
     </Box>
 
     <Button variant="contained">Generar</Button>
