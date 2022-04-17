@@ -9,11 +9,75 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { render } from '@testing-library/react';
 
+import PropTypes from 'prop-types';
+import Avatar from '@mui/material/Avatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import Typography from '@mui/material/Typography';
+import { blue } from '@mui/material/colors';
 
 
+const emails = ['username@gmail.com', 'user02@gmail.com'];
+
+var values = []
+var valuesDecimal = []
+
+
+function SimpleDialog(props) {
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+    values = []
+    valuesDecimal = []
+    
+
+  };
+
+  const handleListItemClick = (value) => {
+    onClose(value);
+  };
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+      <table>
+      <tr>
+    <th>Numero Aleatorio</th>
+    <th>Ri</th>
+  </tr>
+        {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
+      {/* {values.map(name => <h1>{name}</h1>)}
+      {valuesDecimal.map(name => <h1>{name}</h1>)} */}
+      </table>
+    </Dialog>
+  );
+}
+
+SimpleDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+};
 
 
 export default function App() {
+
+const [open, setOpen] = React.useState(false);
+const [selectedValue, setSelectedValue] = React.useState(values[1]);
+
+
+const handleClickOpen = () => {
+  setOpen(true);
+};
+
+const handleClose = (value) => {
+  setOpen(false);
+  setSelectedValue(value);
+};
 
   
 
@@ -54,8 +118,6 @@ export default function App() {
   var squareSeed
   var stringSeed
   var tempSeed
-  var values = [];
-  var valuesDecimal = [] 
   squareSeed = seed * seed;
   
 
@@ -78,30 +140,10 @@ export default function App() {
     squareSeed = tempSeed * tempSeed;
 
   }
-    
-   console.log(values)
-
-  
-
-   render(
-    <div className="App">
-    <table>
-      {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
-    {/* {values.map(name => <h1>{name}</h1>)}
-    {valuesDecimal.map(name => <h1>{name}</h1>)} */}
-    </table>
-      </div>
-
-   );
-
-
-
   }
 
   function mcCalculate(){
     var iSeed;
-    var values = [];
-    var valuesDecimal =[];
     var tempSeed;
     var riSeed;
 
@@ -119,15 +161,6 @@ export default function App() {
     console.log(values)
     console.log(valuesDecimal)
 
-    render(
-      <div className="App">
-      <table>
-        {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
-      {/* {values.map(name => <h1>{name}</h1>)}
-      {valuesDecimal.map(name => <h1>{name}</h1>)} */}
-      </table>
-        </div>
-    );
 
 
 
@@ -135,8 +168,6 @@ export default function App() {
 
   function mcmCalculate(){
     var iSeed;
-    var values = [];
-    var valuesDecimal =[];
     var tempSeed;
     var riSeed;
     let primitiveRelative = false;
@@ -183,18 +214,7 @@ export default function App() {
       }
     }
     
-    console.log(values)
-    console.log(valuesDecimal)
 
-    render(
-      <div className="App">
-      <table>
-        {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
-      {/* {values.map(name => <h1>{name}</h1>)}
-      {valuesDecimal.map(name => <h1>{name}</h1>)} */}
-      </table>
-        </div>
-    );
 
 
   }
@@ -236,7 +256,14 @@ export default function App() {
 
     <Button  onClick={() => {
     mccCalculate();
+    handleClickOpen();
   }} variant="contained">Generar</Button>
+
+   <SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
 
  
      
@@ -278,7 +305,14 @@ export default function App() {
     </Box>
     <Button  onClick={() => {
     mcCalculate();
+    handleClickOpen();
   }} variant="contained">Generar</Button>
+
+<SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
     
      
      
@@ -320,7 +354,14 @@ export default function App() {
 
     <Button  onClick={() => {
     mcmCalculate();
+    handleClickOpen();
   }} variant="contained">Generar</Button>
+
+<SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
      
      
   </div>);
