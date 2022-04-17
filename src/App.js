@@ -58,12 +58,11 @@ const handleClose2 = (value) => {
   const [inc, setInc] = React.useState('');
   const [mult, setMult] = React.useState('');
   const [mod, setMod] = React.useState('');
+  const [alpha, setAlpha] = React.useState('');
   
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
-
-
   };
 
   const handleSeedChange = (event) => {
@@ -82,6 +81,10 @@ const handleClose2 = (value) => {
   };
   const handleModChange = (event) => {
     setMod(parseInt(event.target.value));
+  };
+
+  const handleAlphaChange = (event) => {
+    setAlpha(parseInt(event.target.value));
   };
 
 
@@ -170,10 +173,7 @@ const handleClose2 = (value) => {
     return (
       <Dialog onClose={handleClose2} open={open2}>
         <DialogTitle>Prueba Kolmogorov-Smirnov</DialogTitle>
-        <TextField id="outlined-basic" label="Ingersar Alpha"  variant="outlined" />
-        <Button  onClick={() => {
-    Smirnov();
-  }} variant="contained">Verificar</Button>
+        
       </Dialog>
     );
   }
@@ -347,6 +347,7 @@ const handleClose2 = (value) => {
   var dMax = Math.max.apply(Math, dArr)
 
   console.log(dMax)
+  console.log(alpha)
   
 
 
@@ -435,7 +436,13 @@ const handleClose2 = (value) => {
     <TextField id="outlined-basic" label="Multiplicador" onChange={handleMultChange}  variant="outlined" />
     <TextField id="outlined-basic" label="Incremento" onChange={handleIncChange} variant="outlined" />
     <TextField id="outlined-basic" label="Modulo" onChange={handleModChange} variant="outlined" />
+    
     </Box>
+
+    <Box>
+    <TextField id="outlined-basic" label="Alpha" onChange={handleAlphaChange} variant="outlined" />
+    </Box>
+    
     <Button  onClick={() => {
     mcCalculate();
     handleClickOpen();
