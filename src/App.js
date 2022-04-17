@@ -13,11 +13,15 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 export default function App() {
 
+  var randomMethod = "mcc";
+
   const [alignment, setAlignment] = React.useState('mcc');
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
+    randomMethod = newAlignment;
   };
+  console.log(randomMethod);
   
   return (
 
@@ -45,7 +49,9 @@ export default function App() {
       noValidate
       autoComplete="off"
     >
-      <TextField id="outlined-basic" label="Initial Number" variant="outlined" />
+      
+      <TextField id="outlined-basic" label="Semilla" variant="outlined" />
+      <TextField id="outlined-basic" label="Size" variant="outlined" />
       </Box>
        
        
