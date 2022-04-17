@@ -134,6 +134,68 @@ export default function App() {
   }
 
   function mcmCalculate(){
+    var iSeed;
+    var values = [];
+    var valuesDecimal =[];
+    var tempSeed;
+    var riSeed;
+    let primitiveRelative = false;
+    let secondCond = false;
+    let thirdCond = false;
+    let q = 2;
+
+    iSeed = (seed * mult + inc) % mod;
+    
+    function gcd(a, b) {
+      if (b === 0) return a;
+      return gcd(b, a % b);
+    }
+    function isPrime(k) {
+      if (k <= 1) return false;
+
+      for (let i = 2; i < k; i++) if (k % i == 0) return false;
+  
+      return true;
+    }
+    if (q.isPrime && q % mod ===0 && seed%(mult-1)==0){
+      secondCond= true;
+    }
+    if (mod % 4 === 0 && (mult - 1) % 4 === 0) {
+      thirdCond = true;
+    }
+
+    
+
+    
+    if (gcd(inc, mod) === 1){
+      primitiveRelative = true;
+    }
+    
+    
+    if(primitiveRelative && thirdCond ){
+      for (let i = 0; i <= size; i++) {
+        values.push(iSeed);
+        tempSeed = iSeed;
+        iSeed = (tempSeed * mult + inc) %mod;
+        riSeed = tempSeed/mod;
+        valuesDecimal.push(riSeed);
+    
+      }
+    }
+    
+    console.log(values)
+    console.log(valuesDecimal)
+
+    render(
+      <div className="App">
+      <table>
+        {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
+      {/* {values.map(name => <h1>{name}</h1>)}
+      {valuesDecimal.map(name => <h1>{name}</h1>)} */}
+      </table>
+        </div>
+    );
+
 
   }
 
@@ -256,7 +318,9 @@ export default function App() {
     <TextField id="outlined-basic" label="Modulo" onChange={handleModChange} variant="outlined" />
     </Box>
 
-    <Button variant="contained">Generar</Button>
+    <Button  onClick={() => {
+    mcmCalculate();
+  }} variant="contained">Generar</Button>
      
      
   </div>);
