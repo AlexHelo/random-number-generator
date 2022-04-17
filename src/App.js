@@ -1,27 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { render } from '@testing-library/react';
-
 import PropTypes from 'prop-types';
-import Avatar from '@mui/material/Avatar';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import Typography from '@mui/material/Typography';
-import { blue } from '@mui/material/colors';
+import Stack from '@mui/material/Stack';
 
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
+
+
 
 var values = []
 var valuesDecimal = []
@@ -34,12 +24,6 @@ function SimpleDialog(props) {
     onClose(selectedValue);
     values = []
     valuesDecimal = []
-    
-
-  };
-
-  const handleListItemClick = (value) => {
-    onClose(value);
   };
 
   return (
@@ -62,6 +46,43 @@ SimpleDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   selectedValue: PropTypes.string.isRequired,
 };
+
+
+function SimpleDialogPlus(props) {
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+    values = []
+    valuesDecimal = []
+  };
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+      <table>
+      <tr>
+    <th>Numero Aleatorio</th>
+    <th>Ri</th>
+  </tr>
+        {values.map((name, i) => <tr><td>{name}</td><td>{valuesDecimal[i]}</td></tr>)}
+      {/* {values.map(name => <h1>{name}</h1>)}
+      {valuesDecimal.map(name => <h1>{name}</h1>)} */}
+      </table>
+
+      <Stack spacing={2} direction="row">
+      <Button variant="contained">Chi-Cuadrada</Button>
+      <Button variant="contained">Kolmogorov-Smirnov</Button>
+    </Stack>
+    </Dialog>
+  );
+}
+
+SimpleDialogPlus.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+};
+
 
 
 export default function App() {
@@ -160,10 +181,6 @@ const handleClose = (value) => {
     }
     console.log(values)
     console.log(valuesDecimal)
-
-
-
-
   }
 
   function mcmCalculate(){
@@ -213,13 +230,37 @@ const handleClose = (value) => {
     
       }
     }
-    
-
-
-
+    else{
+      values.push("Estos valores no cumplen con las reglas")
+      valuesDecimal.push(0)
+    }
   }
 
+  function gmCalculate(){
   
+    if (mod >= 0 && seed >= 0 && mult >= 0 && mod > mult && mod > seed){
+      var iSeed;
+      var tempSeed;
+      var riSeed;
+  
+      iSeed = (seed * mult ) %mod;
+      
+  
+      for (let i = 0; i <= size; i++) {
+        values.push(iSeed);
+        tempSeed = iSeed;
+        iSeed = (tempSeed * mult) %mod;
+        riSeed = tempSeed/mod;
+        valuesDecimal.push(riSeed);
+    
+      }
+      
+    }
+    else {
+      values.push("Estos valores no cumplen con las reglas")
+      valuesDecimal.push(0)
+    }   
+  }
 
   switch (alignment) {
     case 'mcc':
@@ -308,7 +349,7 @@ const handleClose = (value) => {
     handleClickOpen();
   }} variant="contained">Generar</Button>
 
-<SimpleDialog
+<SimpleDialogPlus
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
@@ -357,7 +398,7 @@ const handleClose = (value) => {
     handleClickOpen();
   }} variant="contained">Generar</Button>
 
-<SimpleDialog
+<SimpleDialogPlus
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
@@ -393,13 +434,22 @@ const handleClose = (value) => {
     autoComplete="off"
   >
     
-    <TextField id="outlined-basic" label="Semilla" variant="outlined" />
-    <TextField id="outlined-basic" label="Tamaño" variant="outlined" />
-    <TextField id="outlined-basic" label="Multiplicador" variant="outlined" />
-    <TextField id="outlined-basic" label="Modulo" variant="outlined" />
+    <TextField id="outlined-basic" label="Semilla" onChange={handleSeedChange} variant="outlined" />
+    <TextField id="outlined-basic" label="Tamaño" onChange={handleSizeChange} variant="outlined" />
+    <TextField id="outlined-basic" label="Multiplicador" onChange={handleMultChange}  variant="outlined" />
+    <TextField id="outlined-basic" label="Modulo" onChange={handleModChange} variant="outlined" />
     </Box>
      
-    <Button variant="contained">Generar</Button>
+    <Button  onClick={() => {
+    gmCalculate();
+    handleClickOpen();
+  }} variant="contained">Generar</Button>
+
+<SimpleDialogPlus
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
      
   </div>);
       break;
