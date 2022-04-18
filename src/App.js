@@ -397,7 +397,7 @@ const handleClose2 = (value) => {
     }
     
     console.log(valueHolder)
-
+    // TODO Add Crop at valueHolder[0].length-1
 
 
   }
