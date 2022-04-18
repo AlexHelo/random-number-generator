@@ -193,7 +193,7 @@ const handleClose2 = (value) => {
   squareSeed = seed * seed;
   
 
-   for (let i = 0; i <= size; i++) {
+   for (let i = 0; i < size; i++) {
 
     
     stringSeed = squareSeed.toString();
@@ -271,7 +271,7 @@ const handleClose2 = (value) => {
     
     
     if(primitiveRelative && thirdCond ){
-      for (let i = 0; i <= size; i++) {
+      for (let i = 0; i < size; i++) {
         values.push(iSeed);
         tempSeed = iSeed;
         iSeed = (tempSeed * mult + inc) %mod;
@@ -296,7 +296,7 @@ const handleClose2 = (value) => {
       iSeed = (seed * mult ) %mod;
       
   
-      for (let i = 0; i <= size; i++) {
+      for (let i = 0; i < size; i++) {
         values.push(iSeed);
         tempSeed = iSeed;
         iSeed = (tempSeed * mult) %mod;
@@ -623,6 +623,10 @@ const handleClose2 = (value) => {
     <TextField id="outlined-basic" label="Modulo" onChange={handleModChange} variant="outlined" />
     </Box>
 
+    <Box>
+    <TextField id="outlined-basic" label="Alpha" onChange={handleAlphaChange} variant="outlined" />
+    </Box>
+
     <Button  onClick={() => {
     mcmCalculate();
     handleClickOpen();
@@ -670,6 +674,10 @@ const handleClose2 = (value) => {
     <TextField id="outlined-basic" label="Modulo" onChange={handleModChange} variant="outlined" />
     </Box>
      
+    <Box>
+    <TextField id="outlined-basic" label="Alpha" onChange={handleAlphaChange} variant="outlined" />
+    </Box>
+
     <Button  onClick={() => {
     gmCalculate();
     handleClickOpen();
