@@ -338,7 +338,44 @@ const handleClose2 = (value) => {
   }
 
   function mclmCalculate(){
-  
+
+    var valueHolder = [[]]
+    var loopComplete = false
+    var counter = 0
+
+   
+
+
+    for (let i = 0; i < inputList.length; i++) {
+
+
+      if (Array.isArray(valueHolder)) {
+        valueHolder[i].push(parseInt(inputList[i].Semilla));
+       
+      } else {
+        console.log('arr variable does not store an array');
+      }
+      
+    }
+
+    for (let i = 0; i < inputList.length; i++) {
+      
+      counter = 0
+
+        while (loopComplete === false) {
+         valueHolder[i].push(inputList[i].Multiplicador * valueHolder[i][counter] % inputList[i].Modulo) 
+
+
+         if (valueHolder[i][counter] === valueHolder[i][0]){
+           loopComplete = true
+         }
+
+          counter = counter + 1
+        }
+    }
+
+    console.log(valueHolder)
+
 
 
   }
@@ -752,6 +789,18 @@ const handleClose2 = (value) => {
         );
       })}
 <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+
+<Button  onClick={() => {
+    mclmCalculate();
+    handleClickOpen();
+  }} variant="contained">Generar</Button>
+
+<SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
+
    
      
      
