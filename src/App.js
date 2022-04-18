@@ -342,39 +342,58 @@ const handleClose2 = (value) => {
     var valueHolder = [[]]
     var loopComplete = false
     var counter = 0
+    var exitCounter = false
+
+    var tempCounter = 0;
+
 
    
 
-
     for (let i = 0; i < inputList.length; i++) {
-
-
-      if (Array.isArray(valueHolder)) {
-        valueHolder[i].push(parseInt(inputList[i].Semilla));
-       
-      } else {
-        console.log('arr variable does not store an array');
-      }
-      
+      valueHolder[i] = []
+      valueHolder[i].push(parseInt(inputList[i].Semilla));
     }
 
-    for (let i = 0; i < inputList.length; i++) {
+
+    while (exitCounter === false) {
+     
+     
+      for (let i = 0; i < inputList.length; i++) {
+        counter = 0
+        loopComplete = false
+  
+          while (loopComplete === false) {
+           valueHolder[i].push(inputList[i].Multiplicador * valueHolder[i][counter] % inputList[i].Modulo) 
+  
+           counter = counter + 1
+           if (valueHolder[i][counter] === valueHolder[i][0]){
+             loopComplete = true
+           }
+          }
+      }  
       
-      counter = 0
+      console.log("Checkpoint")
+      console.log(valueHolder)
+      
+      
+      for (let j = 0; j < inputList.length; j++) {
 
-        while (loopComplete === false) {
-         valueHolder[i].push(inputList[i].Multiplicador * valueHolder[i][counter] % inputList[i].Modulo) 
+        
 
-
-         if (valueHolder[i][counter] === valueHolder[i][0]){
-           loopComplete = true
-         }
-
-          counter = counter + 1
+        console.log("Checking if " + valueHolder[j][0] + " is equal to this " + valueHolder[j][valueHolder[0].length-1])
+        if (valueHolder[j][0] === valueHolder[j][valueHolder[0].length]){    
+          exitCounter = true
         }
-    }
+        else {
+          exitCounter = false    
+        }
+      }
 
-    console.log(valueHolder)
+
+      
+    }
+    
+    console.log("CheckpointFinal")
 
 
 
