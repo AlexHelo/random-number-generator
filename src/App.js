@@ -372,28 +372,31 @@ const handleClose2 = (value) => {
           }
       }  
       
-      console.log("Checkpoint")
-      console.log(valueHolder)
+    
+    
       
       
       for (let j = 0; j < inputList.length; j++) {
 
         
 
-        console.log("Checking if " + valueHolder[j][0] + " is equal to this " + valueHolder[j][valueHolder[0].length-1])
-        if (valueHolder[j][0] === valueHolder[j][valueHolder[0].length]){    
+        
+        if (valueHolder[j][0] === valueHolder[j][valueHolder[0].length-1]){
+        
+        
           exitCounter = true
         }
         else {
-          exitCounter = false    
+
+          
+          exitCounter = false
+          
         }
       }
 
-
-      
     }
     
-    console.log("CheckpointFinal")
+    console.log(valueHolder)
 
 
 
