@@ -395,9 +395,36 @@ const handleClose2 = (value) => {
       }
 
     }
+
+    
+    for (let i = 0; i < inputList.length; i++) {
+      if (i != 0) {
+        valueHolder[i] = valueHolder[i].slice(0,valueHolder[0].length)
+      }
+    }
+    
     
     console.log(valueHolder)
-    // TODO Add Crop at valueHolder[0].length-1
+
+    var wHold = 0
+
+    for (let i = 0; i < valueHolder[0].length; i++) {
+      wHold = 0
+      for (let j = 0; j < inputList.length; j++) {
+         wHold =  valueHolder[j][i] - wHold
+
+         
+      }   
+
+      console.log(wHold)
+
+      values.push(wHold % mod)
+
+    }
+
+
+    
+    
 
 
   }
@@ -793,8 +820,11 @@ const handleClose2 = (value) => {
 
   <h1>Metodo Congruencial lineal Combinado</h1>
 
-    
+  <TextField id="outlined-basic" label="Modulo Final" onChange={handleModChange} variant="outlined" />
 
+<b/>
+    
+<div style={{ marginTop: 40 }}>
     {inputList.map((x, i) => {
         return (
 
@@ -811,6 +841,7 @@ const handleClose2 = (value) => {
         );
       })}
 <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+</div>
 
 <Button  onClick={() => {
     mclmCalculate();
