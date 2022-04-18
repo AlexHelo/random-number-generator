@@ -19,6 +19,9 @@ var values = []
 var valuesDecimal = []
 var testResult
 
+var x
+var i
+
 
 console.warn = () => {};
 
@@ -26,6 +29,28 @@ console.warn = () => {};
 
 
 export default function App() {
+
+
+const [inputList, setInputList] = React.useState([{ Semilla: "", Multiplicador: "" , Modulo: "" }]);
+
+const handleInputChange = (e, index) => {
+  const { name, value } = e.target;
+  const list = [...inputList];
+  list[index][name] = value;
+  setInputList(list);
+};
+ 
+// handle click event of the Remove button
+const handleRemoveClick = index => {
+  const list = [...inputList];
+  list.splice(index, 1);
+  setInputList(list);
+};
+ 
+// handle click event of the Add button
+const handleAddClick = () => {
+  setInputList([...inputList, { Semilla: "", Multiplicador: "" , Modulo: ""}]);
+};
 
 const [open, setOpen] = React.useState(false);
 const [open2, setOpen2] = React.useState(false);
@@ -709,20 +734,24 @@ const handleClose2 = (value) => {
 
   <h1>Metodo Congruencial lineal Combinado</h1>
 
-    <Box
-    component="form"
-    sx={{
-      '& > :not(style)': { m: 1, width: '25ch' },
-    }}
-    noValidate
-    autoComplete="off"
-  >
     
-    <TextField id="outlined-basic" label="No de Funciones" variant="outlined" />
-    <TextField id="outlined-basic" label="Semilla" variant="outlined" />
-    <Button variant="contained">Crear </Button>
-    </Box>
 
+    {inputList.map((x, i) => {
+        return (
+
+          <Box>
+            <TextField id="outlined-basic" name = "Semilla" label="Semilla"  value={x.Semilla} onChange={e => handleInputChange(e, i)} variant="outlined" />
+            <TextField id="outlined-basic" name = "Multiplicador" label="Multiplicador" value={x.Multiplicador} onChange={e => handleInputChange(e, i)} variant="outlined" />
+            <TextField id="outlined-basic" name = "Modulo" label="Modulo" value={x.Modulo} onChange={e => handleInputChange(e, i)} variant="outlined" />
+            {inputList.length !== 1 && <Button variant="contained"
+              className="mr10"
+              onClick={() => handleRemoveClick(i)}>Remove</Button>}
+            {inputList.length - 1 === i && <Button variant="contained" onClick={handleAddClick}>Add</Button>}
+          
+          </Box>
+        );
+      })}
+<div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
    
      
      
