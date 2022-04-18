@@ -720,12 +720,10 @@ const handleClose2 = (value) => {
     
     <TextField id="outlined-basic" label="No de Funciones" variant="outlined" />
     <TextField id="outlined-basic" label="Semilla" variant="outlined" />
-    <TextField id="outlined-basic" label="Tamaño" variant="outlined" />
-    <TextField id="outlined-basic" label="Multiplicador" variant="outlined" />
-    <TextField id="outlined-basic" label="Modulo" variant="outlined" />
+    <Button variant="contained">Crear </Button>
     </Box>
 
-    <Button variant="contained">Generar</Button>
+   
      
      
   </div>);
